@@ -65,6 +65,7 @@ export class DocumentService extends AbstractService<Document> {
                     ),
                     true
                 );
+                xhr.setRequestHeader('Content-Type', 'multipart/form-data');
                 xhr.send(formData);
             }
         });
