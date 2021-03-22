@@ -4,6 +4,7 @@ import {AuthenticationService} from '../../service/authentication.service';
 import {UserInSession} from '../../model/user-in-session';
 import {ADMIN_ITEMS, APP_VERSION, SEVERITY_VALUES} from '../../constants/constants';
 import {MessageService} from 'primeng/api';
+import {KeycloakService} from 'keycloak-angular';
 
 @Component(
     {
@@ -21,18 +22,11 @@ export class AdminpageComponent {
 
     constructor(private _route: ActivatedRoute,
                 public router: Router,
-                private authenticationService: AuthenticationService,
+                protected keycloakService: KeycloakService,
                 private messageService: MessageService) {
         this.utente = new UserInSession();
-        this.authenticationService.getUtente().subscribe(
-            utente => {
-                if (utente) {
-                    console.log('utente: ' + utente.username);
-                    this.utente = utente;
-                } else {
-                    this.utente.username = 'sconosciuto';
-                }
-            });
+        this.utente.username = this.keycloakService.getUsername();
+        this.utente.roles = this.keycloakService.getUserRoles();
         this.items = ADMIN_ITEMS;
     }
 

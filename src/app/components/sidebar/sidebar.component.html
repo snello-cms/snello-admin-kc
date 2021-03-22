@@ -11,14 +11,17 @@
             </a>
         </li>
         <li *permit="'contents_edit, contents_view'">
-            <a [routerLink]="'/home'" (click)="select('home')" [className]="isContenPage()"><i class="fa fa-bookmark-o" aria-hidden="true"></i> CONTENTS
+            <a [routerLink]="'/home'" (click)="select('home')" [className]="isContenPage()"><i class="fa fa-bookmark-o"
+                                                                                               aria-hidden="true"></i>
+                CONTENTS
             </a>
         </li>
     </ul>
 
     <ul class="user-menu">
         <li [class]="''">
-            <a (click)="edit()"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{utente.username}}</a> &nbsp;<a (click)="logout()">  logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+            <i class="fa fa-user-circle" aria-hidden="true"></i> {{utente.username}} &nbsp;<a (click)="logout()"> logout
+            <i class="fa fa-sign-out" aria-hidden="true"></i></a>
         </li>
 
     </ul>

@@ -4,6 +4,7 @@ import {AuthenticationService} from '../../service/authentication.service';
 import {Router} from '@angular/router';
 import {ConfigurationService} from '../../service/configuration.service';
 import {UserInSession} from '../../model/user-in-session';
+import {KeycloakService} from 'keycloak-angular';
 
 @Component({
     selector: 'sidebar',
@@ -14,36 +15,26 @@ export class SideBarComponent {
     public asset_path: string;
     public utente: UserInSession;
 
-    constructor(private authenticationService: AuthenticationService,
+    constructor(protected keycloakService: KeycloakService,
                 private configurationService: ConfigurationService,
                 protected router: Router) {
         configurationService.getValue(ASSET_PATH).subscribe(
             ass => this.asset_path = ass
         );
         this.utente = new UserInSession();
-        this.authenticationService.getUtente().subscribe(
-            utente => {
-                if (utente) {
-                    console.log('utente: ' + utente.username);
-                    this.utente = utente;
-                } else {
-                    this.utente.username = 'sconosciuto';
-                }
-            });
+        this.utente.username = this.keycloakService.getUsername();
+        this.utente.roles = this.keycloakService.getUserRoles();
     }
 
     logout() {
-        this.authenticationService.logout();
-        this.router.navigate(['/login']);
+        this.keycloakService.logout();
     }
 
     public select(page: string) {
         this.selected = page;
     }
 
-    public edit() {
-        this.router.navigate(['/user/yourself', this.utente.username]);
-    }
+
 
     version(): string {
         return APP_VERSION;

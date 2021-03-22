@@ -19,5 +19,8 @@
   "api_service_path": "http://localhost:4200/api",
   "identity_api_path": "http://localhost:4200/api/users",
   "draggable_api_path": "http://localhost:4200/api/draggables",
-  "droppable_api_path": "http://localhost:4200/api/droppables"
+  "droppable_api_path": "http://localhost:4200/api/droppables",
+  "keycloakUrl": "https://sso.n-ess.it/auth",
+  "keycloakRealm": "lab",
+  "keycloakClientId": "snello-admin"
 }

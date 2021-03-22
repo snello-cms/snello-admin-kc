@@ -16,7 +16,7 @@ export const ROLE_API_PATH = 'role_api_path';
 export const USER_ROLES_API_PATH = 'user_roles_api_path';
 export const URL_MAP_RULES_API_PATH = 'url_map_rules_api_path';
 export const API_SERVICE_PATH = 'api_service_path';
-export const APP_VERSION = '1.0.0.RC6';
+export const APP_VERSION = '2.0.0.RC1';
 
 export const CONFIG_PATH = environment.imgPath + '/assets/config.json';
 
@@ -68,44 +68,12 @@ export const ADMIN_ITEMS: any[] = [
         roles: 'documents_edit, documents_view'
     },
     {
-        id: 'edit',
-        icon: 'fa fa-globe',
-        section: 'publicdata',
-        name: 'Public Data Management',
-        summary: 'Upload di dati',
-        roles: 'publicdata_edit'
-    },
-    {
         id: 'list',
         icon: 'fa fa-list',
         section: 'selectqueries',
         name: 'SelectQuery',
         summary: 'Select Queries Management',
         roles: 'selectqueries_edit, selectqueries_view'
-    },
-    {
-        id: 'list',
-        icon: 'fa fa-user-circle-o',
-        section: 'user',
-        name: 'User',
-        summary: 'Users Management',
-        roles: 'users_edit, users_view'
-    },
-    {
-        id: 'list',
-        icon: 'fa fa-address-card-o',
-        section: 'role',
-        name: 'Role',
-        summary: 'Roles Management',
-        roles: 'roles_edit,roles_view'
-    },
-    {
-        id: 'list',
-        icon: 'fa fa-map-signs',
-        section: 'urlmaprules',
-        name: 'Url Map Rules',
-        summary: 'Url Map Rules',
-        roles: 'urlmaprules_edit, urlmaprules_view'
     },
     {
         id: 'list',

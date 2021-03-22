@@ -205,6 +205,9 @@ export abstract class AbstractService<T> {
     }
 
     protected postList(ts: T[]) {
+        if (ts == null || ts == undefined) {
+            return;
+        }
         for (let t = 0; t < ts.length; t++) {
             this.unmarshall(ts[t]);
         }

@@ -39,6 +39,8 @@ export class DocumentService extends AbstractService<Document> {
                     xhr: XMLHttpRequest = new XMLHttpRequest();
 
                 formData.append('file', blob);
+                formData.append('filename', blob.name);
+                formData.append('mimeType', blob.type);
                 formData.append('table_name', table_name);
                 formData.append('table_key', table_key);
 
@@ -65,7 +67,8 @@ export class DocumentService extends AbstractService<Document> {
                     ),
                     true
                 );
-                xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+                // xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+                // xhr.setRequestHeader('Accept-Encoding', 'multipart/form-data');
                 xhr.send(formData);
             }
         });

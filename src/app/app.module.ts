@@ -103,6 +103,8 @@ import {ExtensionsViewComponent} from './components/extensions/extensions-view.c
 import {MonacoEditorModule} from 'ngx-monaco-editor';
 import {ExtensionsListComponent} from './components/extensions/extensions-list.component';
 import {ExtensionsEditComponent} from './components/extensions/extensions-edit.component';
+import {initializer} from './utils/app-init';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 registerLocaleData(localeIt);
 
@@ -181,6 +183,7 @@ export function loadConfigurations(configService: ConfigurationService) {
         YourselfEditComponent
     ],
     imports: [
+        KeycloakAngularModule,
         primengEditorModule,
         ChartModule,
         BrowserModule,
@@ -253,7 +256,12 @@ export function loadConfigurations(configService: ConfigurationService) {
                 provide: HTTP_INTERCEPTORS,
                 useClass: AuthenticationInterceptor,
                 multi: true
-            }
+            }, {
+            provide: APP_INITIALIZER,
+            useFactory: initializer,
+            multi: true,
+            deps: [KeycloakService, ConfigurationService],
+        },
         ]
     ],
     bootstrap: [AppComponent],

@@ -23,9 +23,21 @@
               "src/assets",
               "src/config.html",
               "src",
-              { "glob": "**/*", "input": "node_modules/tinymce/skins", "output": "/tinymce/skins/" },
-              { "glob": "**/*", "input": "node_modules/tinymce/themes", "output": "/tinymce/themes/" },
-              { "glob": "**/*", "input": "node_modules/tinymce/plugins", "output": "/tinymce/plugins/" }
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce/skins",
+                "output": "/tinymce/skins/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce/themes",
+                "output": "/tinymce/themes/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce/plugins",
+                "output": "/tinymce/plugins/"
+              }
             ],
             "styles": [
               "src/custom-theme.scss",
@@ -147,5 +159,8 @@
       }
     }
   },
-  "defaultProject": "snello-admin"
+  "defaultProject": "snello-admin",
+  "cli": {
+    "analytics": "78978412-5b33-4634-ac06-f6c9dc8b0a65"
+  }
 }

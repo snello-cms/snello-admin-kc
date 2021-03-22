@@ -14,7 +14,7 @@ export class ConfigurationService {
     constructor(private http: HttpClient) {
     }
 
-    getConfigs(): Promise<Object> {
+    getConfigs(): Promise<any> {
         console.log('loading configurations');
         return this.http.get(CONFIG_PATH) // this could be a http request
             .pipe(
