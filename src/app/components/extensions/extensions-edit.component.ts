@@ -8,7 +8,7 @@ import {ExtensionService} from '../../service/extension.service';
 import {DocumentService} from '../../service/document.service';
 import {flatMap} from 'rxjs/operators';
 import {from, Observable, of} from 'rxjs';
-import {FileUpload} from "primeng/fileupload";
+import {FileUpload} from 'primeng/fileupload';
 
 @Component({
     templateUrl: './extensions-edit.component.html'
@@ -63,10 +63,9 @@ export class ExtensionsEditComponent extends AbstractEditComponent<Extension> im
         this.service.persist(this.element).pipe(
             flatMap(
                 extensionSaved => {
-
                     console.log('extension seaved', extensionSaved);
                     this.element = extensionSaved;
-                    return from(this.uploadAFile(this.uploadedFiles[0], extensionSaved.uuid));
+                    return this.uploadAFile(this.uploadedFiles[0], extensionSaved.uuid);
                 }
             ),
             flatMap(
@@ -121,19 +120,20 @@ export class ExtensionsEditComponent extends AbstractEditComponent<Extension> im
     }
 
 
-    private uploadAFile(file, extension_uuid: string): Promise<any> {
+    private uploadAFile(file, extension_uuid: string): Observable<any> {
         this.uploadedFile = file.name;
-        return this.documentService
+        let ret;
+        this.documentService
             .upload(file, 'extension', extension_uuid)
-            .then(res => {
+            .subscribe(res => {
                 this.okFileList = [this.uploadedFile, ...this.okFileList];
                 this.uploading = false;
-                return res;
-            })
-            .catch(error => {
+                ret = res;
+            }, error => {
                 this.errorFileList = [this.uploadedFile, ...this.errorFileList];
                 this.uploading = false;
             });
+        return of(ret);
     }
 
     download(uuid: string): void {

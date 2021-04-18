@@ -6,7 +6,7 @@ import {Document} from '../model/document';
 import {MessageService} from 'primeng/api';
 import {catchError, map} from 'rxjs/operators';
 import {ConfigurationService} from './configuration.service';
-import {DOCUMENT_API_PATH} from '../constants/constants';
+import {DOCUMENT_API_PATH, MULTIPART_FROM_DATA} from '../constants/constants';
 
 @Injectable({
     providedIn: 'root'
@@ -17,61 +17,24 @@ export class DocumentService extends AbstractService<Document> {
     private progress = 0;
     private progressObserver: Observer<number>;
 
-    constructor(protected http: HttpClient, messageService: MessageService, configurationService: ConfigurationService) {
-        super(configurationService.getValue(DOCUMENT_API_PATH), http, messageService);
+    constructor(protected httpClient: HttpClient, messageService: MessageService, configurationService: ConfigurationService) {
+        super(configurationService.getValue(DOCUMENT_API_PATH), httpClient, messageService);
         this.progress$ = new Observable<number>(observer => {
             this.progressObserver = observer;
         });
-
-        this.updateProgress = this.updateProgress.bind(this);
     }
 
     public upload(
         blob: any,
         table_name: string,
-        table_key: string
-    ): Promise<any> {
-        return new Promise((resolve, reject) => {
-            if (blob) {
-                this.updateProgress(0);
-
-                const formData: FormData = new FormData(),
-                    xhr: XMLHttpRequest = new XMLHttpRequest();
-
-                formData.append('file', blob);
-                formData.append('filename', blob.name);
-                formData.append('mimeType', blob.type);
-                formData.append('table_name', table_name);
-                formData.append('table_key', table_key);
-
-                xhr.onreadystatechange = () => {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                            resolve(JSON.parse(xhr.response));
-                        } else {
-                            reject(xhr.response);
-                        }
-                    }
-                };
-
-                this.setUploadUpdateInterval(500);
-
-                xhr.upload.onprogress = event => {
-                    this.updateProgress(Math.round((event.loaded / event.total) * 100));
-                };
-
-                xhr.open(
-                    'POST',
-                    encodeURI(
-                        this.url
-                    ),
-                    true
-                );
-                // xhr.setRequestHeader('Content-Type', 'multipart/form-data');
-                // xhr.setRequestHeader('Accept-Encoding', 'multipart/form-data');
-                xhr.send(formData);
-            }
-        });
+        table_key: string): Observable<any> {
+        const formData: FormData = new FormData();
+        formData.append('file', blob);
+        formData.append('filename', blob.name);
+        formData.append('mimeType', blob.type);
+        formData.append('table_name', table_name);
+        formData.append('table_key', table_key);
+        return this.httpClient.post<any>(this.url, formData);
     }
 
     private setUploadUpdateInterval(interval: number): void {

@@ -31,6 +31,7 @@ export const REFRESH_TOKEN_ITEM = 'snello-refresh-token';
 export const USER_ITEM = 'snello-user';
 export const CONTENT_TYPE = 'Content-Type';
 export const APPLICATION_JSON = 'application/json';
+export const MULTIPART_FROM_DATA = 'multipart/form-data';
 export const AUTHORIZATION = 'Authorization';
 export const BEARER_ = 'Bearer ';
 

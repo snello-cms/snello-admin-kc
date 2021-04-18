@@ -67,15 +67,14 @@ export class DocumentEditComponent extends AbstractEditComponent<Document>
         this.processed = true;
     }
 
-    private uploadAFile(file): Promise<any> {
+    private uploadAFile(file): void {
         this.uploadedFile = file.name;
-        return this.documentService
+        this.documentService
             .upload(file, this.element.table_name, this.element.table_key)
-            .then(res => {
+            .subscribe(res => {
                 this.okFileList = [this.uploadedFile, ...this.okFileList];
                 this.uploading = false;
-            })
-            .catch(error => {
+            }, error => {
                 this.errorFileList = [this.uploadedFile, ...this.errorFileList];
                 this.uploading = false;
             });
@@ -104,11 +103,11 @@ export class DocumentEditComponent extends AbstractEditComponent<Document>
     }
 
     public onBasicUpload(event: any) {
-      this.messageService.add({
-        severity: 'info',
-        summary: 'Informazioni: ',
-        detail: 'event: ' + event
-      });
+        this.messageService.add({
+            severity: 'info',
+            summary: 'Informazioni: ',
+            detail: 'event: ' + event
+        });
         console.log(event);
     }
 

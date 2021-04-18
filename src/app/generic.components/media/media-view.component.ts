@@ -62,23 +62,23 @@ export class MediaViewComponent implements OnInit {
         from(this.uploadFile(event.files[0])).subscribe();
     }
 
-    private uploadFile(fileToUpload: any): Promise<any> {
-
-        return this.documentService
+    private uploadFile(fileToUpload: any): Observable<any> {
+        let ret = {};
+        this.documentService
             .upload(fileToUpload, this.field.table_name, this.field.table_key_value)
-            .then(res => {
+            .subscribe(res => {
                 this.group.value[this.field.name] = res.uuid;
                 this.field.value = res.uuid;
                 this.uploadedFile = res;
-            })
-            .catch(error => {
+                ret = res;
+            }, error => {
                 this.messageService.add({
                     severity: 'info',
                     summary: 'Error while loading document ',
                     detail: ''
                 });
-                return of({});
             });
+        return of(ret);
     }
 
     public downloadPath() {

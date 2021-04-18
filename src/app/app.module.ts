@@ -48,7 +48,6 @@ import {RoleEditComponent} from './components/role/role-edit.component';
 import {RoleListComponent} from './components/role/role-list.component';
 import {UrlmapruleEditComponent} from './components/urlmaprule/urlmaprule-edit.component';
 import {UrlmapruleListComponent} from './components/urlmaprule/urlmaprule-list.component';
-import {AuthenticationInterceptor} from './service/http-interceptors/authentication-interceptor.service';
 import {MainComponent} from './components/main/main.component';
 import {LinksEditComponent} from './components/links/links-edit.component';
 import {LinksListComponent} from './components/links/links-list.component';
@@ -104,7 +103,7 @@ import {MonacoEditorModule} from 'ngx-monaco-editor';
 import {ExtensionsListComponent} from './components/extensions/extensions-list.component';
 import {ExtensionsEditComponent} from './components/extensions/extensions-edit.component';
 import {initializer} from './utils/app-init';
-import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
 
 registerLocaleData(localeIt);
 
@@ -253,15 +252,11 @@ export function loadConfigurations(configService: ConfigurationService) {
                 deps: [ConfigurationService]
             },
             {
-                provide: HTTP_INTERCEPTORS,
-                useClass: AuthenticationInterceptor,
-                multi: true
-            }, {
-            provide: APP_INITIALIZER,
-            useFactory: initializer,
-            multi: true,
-            deps: [KeycloakService, ConfigurationService],
-        },
+                provide: APP_INITIALIZER,
+                useFactory: initializer,
+                multi: true,
+                deps: [KeycloakService, ConfigurationService],
+            },
         ]
     ],
     bootstrap: [AppComponent],
