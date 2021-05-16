@@ -6,3 +6,8 @@ npm install
 ng build --prod
 
 
+### TODO LIST
+- adding logs  viever
+- adding trigger configuration 
+
+
